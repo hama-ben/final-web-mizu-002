@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Mizu Water Delivery"
+description = "An Arabic-first water delivery web app for Mizu, translating the supplied mobile experience into a responsive customer journey with login, registration, dashboard, and new-order flows."
+version = "1.0.0"
+id = "artifacts/mizu-water-delivery"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18224
+
+[services.development]
+run = "pnpm --filter @workspace/mizu-water-delivery run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/mizu-water-delivery", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/mizu-water-delivery/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18224"
+BASE_PATH = "/"
