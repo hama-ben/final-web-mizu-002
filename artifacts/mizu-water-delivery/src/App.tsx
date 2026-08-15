@@ -184,15 +184,85 @@ const translations: Record<Lang, Copy> = {
     },
     privacy: {
       title: 'سياسة الخصوصية',
-      intro: 'نحرص على أن يكون استخدامك لـ Mizu واضحاً وآمناً. النص الكامل لسياسة الخصوصية سيُدرج هنا فور تزويدنا بالنسخة المعتمدة.',
-      missing: '[الصق هنا نص "سياسة الخصوصية" كاملاً من قسم "أولاً: المحتوى النصي" أعلاه]',
-      contact: 'للاستفسارات: [البريد الإلكتروني للدعم/الأمان]',
+      intro: 'آخر تحديث: أغسطس 2026',
+      missing: `1. مقدمة وأساس قانوني
+يلتزم تطبيق وموقع Mizu بحماية بياناتك الشخصية وفقاً لأحكام القانون رقم 18-07 المؤرخ في 10 يونيو 2018 المتعلق بحماية الأشخاص الطبيعيين في مجال معالجة المعطيات ذات الطابع الشخصي، المعدّل والمتمم بموجب القانون رقم 25-11 المؤرخ في 24 يوليو 2025، وتحت إشراف السلطة الوطنية لحماية المعطيات ذات الطابع الشخصي (ANPDP).
+
+2. المعطيات التي نجمعها
+وفقاً للمادة 03 من القانون 18-07 التي تُعرّف "المعطيات ذات الطابع الشخصي" بأنها كل معلومة تسمح بالتعرف على شخص طبيعي بطريقة مباشرة أو غير مباشرة، نجمع منك:
+
+معلومات الحساب: الاسم الكامل، البريد الإلكتروني، رقم الهاتف، كلمة المرور (مشفّرة).
+معلومات الموقع الجغرافي: عنوان التوصيل والولاية.
+بيانات الطلبات: تاريخ الطلبات، الكميات، الأسعار، وتقييماتك.
+بيانات خاصة بالسائقين: وثائق التحقق من الهوية (رخصة القيادة، بطاقة التعريف الوطنية)، بيانات الاشتراك.
+
+3. موافقتك الصريحة (Consent)
+طبقاً لمبدأ الموافقة الصريحة الذي يشترطه القانون 18-07، لا تتم معالجة بياناتك الشخصية إلا بعد موافقتك الواضحة عند التسجيل في التطبيق. يمكنك سحب موافقتك في أي وقت بحذف حسابك أو التواصل معنا.
+
+4. الغاية من جمع البيانات
+تُجمع بياناتك للأغراض التالية حصراً، ولا تُستخدم أو تُحوَّل لغاية أخرى:
+
+تنفيذ ومتابعة طلبات التوصيل بينك وبين السائق.
+التحقق من هويتك عبر رمز التحقق (OTP).
+التواصل معك بخصوص طلباتك أو اشتراكك.
+تحسين جودة الخدمة.
+
+5. مسؤول المعالجة (Data Controller)
+الجهة المسؤولة عن معالجة بياناتك هي فريق Mizu. لأي استفسار حول هذه المعالجة، يمكنك التواصل معنا عبر waterdrive213@gmail.com
+
+6. مكان تخزين البيانات
+نحرص على تخزين بياناتك وفق معايير أمان معتمدة، ونعمل على أن تبقى عمليات المعالجة الحساسة (كوثائق تحقق السائقين) ضمن أطر آمنة ومشفّرة.
+
+7. حقوقك القانونية (وفقاً للقانون 18-07)
+يضمن لك القانون 18-07 الحقوق التالية، ويمكنك ممارستها بالتواصل معنا عبر الدعم الفني داخل التطبيق:
+
+الحق في الإعلام (المادة 32): معرفة تفاصيل معالجة بياناتك.
+الحق في الولوج (المادة 34): طلب نسخة من بياناتك الشخصية المحفوظة لدينا.
+الحق في التصحيح (المادة 35): طلب تصحيح أو استكمال بيانات غير دقيقة أو ناقصة.
+الحق في الاعتراض (المادة 36): الاعتراض على معالجة بياناتك لسبب مشروع.
+الحق في الحذف: طلب حذف حسابك وبياناتك بشكل نهائي.
+
+8. مشاركة المعلومات
+لا نبيع بياناتك لأي طرف ثالث. تتم مشاركة الحد الأدنى الضروري (الاسم، الهاتف، الموقع) بين الزبون والسائق فقط لإتمام التوصيل.
+
+9. مدة الاحتفاظ بالبيانات
+نحتفظ ببياناتك طوال فترة استخدامك النشط للحساب، ولمدة معقولة بعد الحذف للأغراض القانونية إن وجدت، ثم تُحذف بشكل آمن.
+
+10. الاتصال بالسلطة الوطنية
+إذا لم تجد حلاً مرضياً لاستفسارك معنا، يحق لك التواصل مباشرة مع السلطة الوطنية لحماية المعطيات ذات الطابع الشخصي (ANPDP) عبر: anpdp@anpdp.dz
+
+11. تواصل معنا
+لأي استفسار: waterdrive213@gmail.com أو عبر شات الدعم الفني داخل التطبيق.`,
+      contact: '',
     },
     security: {
       title: 'سياسة الأمان',
-      intro: 'نلتزم بحماية حسابك وبياناتك أثناء استخدام Mizu. النص الكامل لسياسة الأمان سيُدرج هنا فور تزويدنا بالنسخة المعتمدة.',
-      missing: '[الصق هنا نص "سياسة الأمان" كاملاً من قسم "أولاً: المحتوى النصي" أعلاه]',
-      contact: 'للإبلاغ عن مشكلة أمنية: [البريد الإلكتروني للدعم/الأمان]',
+      intro: 'آخر تحديث: أغسطس 2026',
+      missing: `1. التزامنا القانوني والتقني بالأمان
+تماشياً مع متطلبات القانون 18-07 الذي يُلزم كل مسؤول معالجة بيانات باتخاذ "تدابير تقنية وتنظيمية ملائمة" لحماية المعطيات الشخصية من الفقدان أو الولوج غير المرخّص أو المعالجة غير المشروعة، نطبّق في Mizu مجموعة من الإجراءات الصارمة.
+
+2. إجراءات الحماية التقنية
+
+التشفير: جميع الاتصالات بين التطبيق وخوادمنا تتم عبر بروتوكول HTTPS المشفّر بالكامل.
+التحقق بخطوتين عبر OTP: تسجيل الدخول وإنشاء الحساب يتطلبان رمز تحقق يُرسل إلى بريدك الإلكتروني.
+تشفير كلمات المرور: لا نخزّن كلمة المرور كنص عادي أبداً؛ تُشفّر باستخدام خوارزميات معتمدة في الصناعة.
+التحقق من هوية السائقين: كل سائق يمرّ بعملية تحقق تشمل وثائق رسمية قبل الموافقة على نشاطه، حماية للزبائن وللسائقين معاً.
+مراقبة مستمرة: نراقب الأنشطة غير الاعتيادية على الحسابات للحد من أي استخدام غير مصرّح به.
+السرية المهنية: وفقاً لما ينص عليه القانون 18-07، يلتزم كل من له اطّلاع على معطياتك الشخصية ضمن فريقنا بالسر المهني حتى بعد انتهاء مهامه.
+
+3. نصائح لحماية حسابك
+
+لا تشارك كلمة مرورك أو رمز التحقق (OTP) مع أي شخص، حتى لو ادّعى أنه من فريق Mizu.
+استخدم كلمة مرور قوية وفريدة لحسابك.
+سجّل الخروج من حسابك عند استخدام جهاز مشترك.
+بلّغنا فوراً عبر الدعم الفني إذا لاحظت أي نشاط مريب.
+
+4. الإبلاغ عن مشاكل أمنية
+إذا اكتشفت ثغرة أمنية، تواصل معنا فوراً عبر waterdrive213@gmail.com لمعالجتها بأسرع وقت.
+
+5. حقك في اللجوء للسلطة الوطنية
+في حال شعرت بأن أمان بياناتك تعرّض للخطر ولم نستجب بشكل مناسب، يحق لك تقديم شكوى للسلطة الوطنية لحماية المعطيات ذات الطابع الشخصي (ANPDP) عبر: anpdp@anpdp.dz`,
+      contact: '',
     },
     privacyLabel: 'سياسة الخصوصية',
     securityLabel: 'سياسة الأمان',
@@ -275,15 +345,85 @@ const translations: Record<Lang, Copy> = {
     },
     privacy: {
       title: 'Politique de confidentialité',
-      intro: 'Nous voulons que votre utilisation de Mizu soit claire et sûre. Le texte complet de la politique de confidentialité sera ajouté dès réception de la version approuvée.',
-      missing: '[Collez ici le texte complet de la « Politique de confidentialité » de la section « Premièrement : contenu textuel » ci-dessus]',
-      contact: 'Pour toute question : [e-mail du support/de la sécurité]',
+      intro: 'Dernière mise à jour : août 2026',
+      missing: `1. Introduction et base juridique
+L’application et le site Mizu s’engagent à protéger vos données personnelles conformément aux dispositions de la loi n° 18-07 du 10 juin 2018 relative à la protection des personnes physiques dans le domaine du traitement des données à caractère personnel, modifiée et complétée par la loi n° 25-11 du 24 juillet 2025, sous la supervision de l’Autorité nationale de protection des données à caractère personnel (ANPDP).
+
+2. Données que nous collectons
+Conformément à l’article 03 de la loi 18-07, qui définit les « données à caractère personnel » comme toute information permettant d’identifier directement ou indirectement une personne physique, nous collectons :
+
+Informations du compte : nom complet, adresse e-mail, numéro de téléphone, mot de passe (chiffré).
+Données de localisation : adresse de livraison et wilaya.
+Données des commandes : dates des commandes, quantités, prix et évaluations.
+Données propres aux chauffeurs : documents de vérification d’identité (permis de conduire, carte nationale d’identité) et données d’abonnement.
+
+3. Votre consentement explicite (Consent)
+Conformément au principe du consentement explicite exigé par la loi 18-07, vos données personnelles ne sont traitées qu’après votre consentement clair lors de votre inscription à l’application. Vous pouvez retirer votre consentement à tout moment en supprimant votre compte ou en nous contactant.
+
+4. Finalité de la collecte des données
+Vos données sont collectées exclusivement pour les finalités suivantes et ne sont pas utilisées ou transférées à d’autres fins :
+
+Exécuter et suivre les commandes de livraison entre vous et le chauffeur.
+Vérifier votre identité au moyen d’un code de vérification (OTP).
+Vous contacter au sujet de vos commandes ou de votre abonnement.
+Améliorer la qualité du service.
+
+5. Responsable du traitement (Data Controller)
+L’équipe Mizu est responsable du traitement de vos données. Pour toute question concernant ce traitement, vous pouvez nous contacter à l’adresse waterdrive213@gmail.com
+
+6. Lieu de stockage des données
+Nous veillons à stocker vos données selon des normes de sécurité reconnues et nous nous efforçons de maintenir les opérations de traitement sensibles, notamment les documents de vérification des chauffeurs, dans des environnements sécurisés et chiffrés.
+
+7. Vos droits légaux (conformément à la loi 18-07)
+La loi 18-07 vous garantit les droits suivants, que vous pouvez exercer en nous contactant via le support technique intégré à l’application :
+
+Droit à l’information (article 32) : connaître les détails du traitement de vos données.
+Droit d’accès (article 34) : demander une copie de vos données personnelles conservées par nos soins.
+Droit de rectification (article 35) : demander la correction ou le complément de données inexactes ou incomplètes.
+Droit d’opposition (article 36) : vous opposer au traitement de vos données pour un motif légitime.
+Droit à l’effacement : demander la suppression définitive de votre compte et de vos données.
+
+8. Partage des informations
+Nous ne vendons vos données à aucun tiers. Le minimum nécessaire (nom, téléphone et localisation) est partagé entre le client et le chauffeur uniquement pour effectuer la livraison.
+
+9. Durée de conservation des données
+Nous conservons vos données pendant toute la durée d’utilisation active de votre compte et pendant une durée raisonnable après sa suppression à des fins légales, le cas échéant, puis elles sont supprimées de manière sécurisée.
+
+10. Contacter l’Autorité nationale
+Si vous ne trouvez pas de solution satisfaisante à votre demande auprès de nous, vous pouvez contacter directement l’Autorité nationale de protection des données à caractère personnel (ANPDP) à l’adresse suivante : anpdp@anpdp.dz
+
+11. Nous contacter
+Pour toute question : waterdrive213@gmail.com ou via le chat du support technique intégré à l’application.`,
+      contact: '',
     },
     security: {
       title: 'Politique de sécurité',
-      intro: 'Nous nous engageons à protéger votre compte et vos données lorsque vous utilisez Mizu. Le texte complet de la politique de sécurité sera ajouté dès réception de la version approuvée.',
-      missing: '[Collez ici le texte complet de la « Politique de sécurité » de la section « Premièrement : contenu textuel » ci-dessus]',
-      contact: 'Pour signaler un problème de sécurité : [e-mail du support/de la sécurité]',
+      intro: 'Dernière mise à jour : août 2026',
+      missing: `1. Notre engagement juridique et technique en matière de sécurité
+Conformément aux exigences de la loi 18-07, qui impose à tout responsable du traitement des données de prendre des « mesures techniques et organisationnelles appropriées » pour protéger les données personnelles contre la perte, l’accès non autorisé ou le traitement illicite, Mizu applique un ensemble de mesures strictes.
+
+2. Mesures de protection technique
+
+Chiffrement : toutes les communications entre l’application et nos serveurs sont entièrement protégées par le protocole HTTPS chiffré.
+Vérification en deux étapes par OTP : la connexion et la création d’un compte nécessitent un code de vérification envoyé à votre adresse e-mail.
+Chiffrement des mots de passe : nous ne stockons jamais votre mot de passe en clair ; il est chiffré à l’aide d’algorithmes reconnus par l’industrie.
+Vérification de l’identité des chauffeurs : chaque chauffeur fait l’objet d’une vérification comprenant des documents officiels avant l’autorisation de son activité, afin de protéger à la fois les clients et les chauffeurs.
+Surveillance continue : nous surveillons les activités inhabituelles sur les comptes afin de limiter toute utilisation non autorisée.
+Confidentialité professionnelle : conformément à la loi 18-07, toute personne de notre équipe ayant accès à vos données personnelles est tenue au secret professionnel, même après la fin de ses fonctions.
+
+3. Conseils pour protéger votre compte
+
+Ne partagez votre mot de passe ou votre code de vérification (OTP) avec personne, même si cette personne prétend faire partie de l’équipe Mizu.
+Utilisez un mot de passe fort et unique pour votre compte.
+Déconnectez-vous lorsque vous utilisez un appareil partagé.
+Informez-nous immédiatement via le support technique si vous remarquez une activité suspecte.
+
+4. Signaler les problèmes de sécurité
+Si vous découvrez une faille de sécurité, contactez-nous immédiatement à l’adresse waterdrive213@gmail.com afin que nous la traitions dans les meilleurs délais.
+
+5. Votre droit de saisir l’Autorité nationale
+Si vous estimez que la sécurité de vos données a été compromise et que notre réponse n’est pas appropriée, vous pouvez déposer une plainte auprès de l’Autorité nationale de protection des données à caractère personnel (ANPDP) à l’adresse suivante : anpdp@anpdp.dz`,
+      contact: '',
     },
     privacyLabel: 'Politique de confidentialité',
     securityLabel: 'Politique de sécurité',
@@ -366,15 +506,85 @@ const translations: Record<Lang, Copy> = {
     },
     privacy: {
       title: 'Privacy Policy',
-      intro: 'We want your experience with Mizu to be clear and safe. The full privacy policy will be added as soon as the approved version is provided.',
-      missing: '[Paste the full “Privacy Policy” text from the “First: Text content” section above here]',
-      contact: 'For questions: [support/security email]',
+      intro: 'Last updated: August 2026',
+      missing: `1. Introduction and legal basis
+The Mizu application and website are committed to protecting your personal data in accordance with the provisions of Law No. 18-07 dated 10 June 2018 relating to the protection of natural persons in the processing of personal data, amended and supplemented by Law No. 25-11 dated 24 July 2025, under the supervision of the National Authority for the Protection of Personal Data (ANPDP).
+
+2. Data we collect
+In accordance with Article 03 of Law 18-07, which defines “personal data” as any information that allows a natural person to be identified directly or indirectly, we collect:
+
+Account information: full name, email address, phone number, and password (encrypted).
+Location information: delivery address and wilaya.
+Order data: order dates, quantities, prices, and ratings.
+Driver-specific data: identity verification documents (driving licence, national identity card), and subscription data.
+
+3. Your explicit consent (Consent)
+In accordance with the principle of explicit consent required by Law 18-07, your personal data is only processed after your clear consent when registering in the application. You may withdraw your consent at any time by deleting your account or contacting us.
+
+4. Purpose of data collection
+Your data is collected exclusively for the following purposes and is not used or transferred for any other purpose:
+
+Executing and tracking delivery orders between you and the driver.
+Verifying your identity through a verification code (OTP).
+Contacting you regarding your orders or subscription.
+Improving the quality of the service.
+
+5. Data Controller
+The team at Mizu is responsible for processing your data. For any questions about this processing, you can contact us at waterdrive213@gmail.com
+
+6. Where data is stored
+We take care to store your data according to recognised security standards and work to keep sensitive processing operations, such as driver verification documents, within secure and encrypted environments.
+
+7. Your legal rights (under Law 18-07)
+Law 18-07 guarantees you the following rights, which you may exercise by contacting us through the in-app technical support:
+
+Right to information (Article 32): knowing the details of how your data is processed.
+Right of access (Article 34): requesting a copy of the personal data we hold about you.
+Right to rectification (Article 35): requesting the correction or completion of inaccurate or incomplete data.
+Right to object (Article 36): objecting to the processing of your data for a legitimate reason.
+Right to erasure: requesting the permanent deletion of your account and data.
+
+8. Sharing information
+We do not sell your data to any third party. Only the minimum necessary information (name, phone number, and location) is shared between the customer and the driver to complete the delivery.
+
+9. Data retention period
+We retain your data throughout the period of active use of your account and for a reasonable period after deletion for legal purposes, if applicable, after which it is securely deleted.
+
+10. Contacting the National Authority
+If you do not find a satisfactory solution to your enquiry with us, you have the right to contact the National Authority for the Protection of Personal Data (ANPDP) directly at: anpdp@anpdp.dz
+
+11. Contact us
+For any questions: waterdrive213@gmail.com or through the in-app technical support chat.`,
+      contact: '',
     },
     security: {
       title: 'Security Policy',
-      intro: 'We are committed to protecting your account and data while you use Mizu. The full security policy will be added as soon as the approved version is provided.',
-      missing: '[Paste the full “Security Policy” text from the “First: Text content” section above here]',
-      contact: 'To report a security issue: [support/security email]',
+      intro: 'Last updated: August 2026',
+      missing: `1. Our legal and technical security commitment
+In line with the requirements of Law 18-07, which requires every data controller to take “appropriate technical and organisational measures” to protect personal data from loss, unauthorised access, or unlawful processing, Mizu applies a set of strict measures.
+
+2. Technical protection measures
+
+Encryption: all communications between the application and our servers take place over the fully encrypted HTTPS protocol.
+Two-step verification through OTP: signing in and creating an account requires a verification code sent to your email address.
+Password encryption: we never store your password in plain text; it is encrypted using industry-recognised algorithms.
+Driver identity verification: every driver undergoes a verification process that includes official documents before their activity is approved, protecting both customers and drivers.
+Continuous monitoring: we monitor unusual account activity to limit any unauthorised use.
+Professional confidentiality: in accordance with Law 18-07, everyone on our team who has access to your personal data is bound by professional confidentiality even after their duties end.
+
+3. Tips for protecting your account
+
+Do not share your password or verification code (OTP) with anyone, even if they claim to be part of the Mizu team.
+Use a strong and unique password for your account.
+Sign out of your account when using a shared device.
+Report it immediately through technical support if you notice any suspicious activity.
+
+4. Reporting security issues
+If you discover a security vulnerability, contact us immediately at waterdrive213@gmail.com so that we can address it as quickly as possible.
+
+5. Your right to contact the National Authority
+If you believe that the security of your data has been compromised and we have not responded appropriately, you have the right to submit a complaint to the National Authority for the Protection of Personal Data (ANPDP) at: anpdp@anpdp.dz`,
+      contact: '',
     },
     privacyLabel: 'Privacy Policy',
     securityLabel: 'Security Policy',
@@ -635,7 +845,7 @@ function PolicyPage({ kind }: { kind: 'privacy' | 'security' }) {
             <h2 className="text-lg font-bold text-white">{isArabic ? 'النص الكامل للسياسة' : lang === 'fr' ? 'Texte complet de la politique' : 'Full policy text'}</h2>
             <p className="mt-5 whitespace-pre-wrap text-sm leading-8 text-slate-400">{content.missing}</p>
           </div>
-          <p className="mt-7 border-s-2 border-cyan-300/50 ps-4 text-sm leading-7 text-slate-400">{content.contact}</p>
+           {content.contact && <p className="mt-7 border-s-2 border-cyan-300/50 ps-4 text-sm leading-7 text-slate-400">{content.contact}</p>}
         </article>
       </main>
       <footer className="border-t border-white/[.06] py-6">
