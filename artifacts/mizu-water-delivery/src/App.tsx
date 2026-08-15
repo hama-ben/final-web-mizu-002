@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowUpRight,
@@ -8,9 +8,11 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleHelp,
+  CircleDollarSign,
   Clock3,
   Droplets,
   Facebook,
+  Gauge,
   Headphones,
   Heart,
   Languages,
@@ -46,6 +48,22 @@ const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61590856328769';
 const queryClient = new QueryClient();
 
 type Lang = 'ar' | 'fr' | 'en';
+type RoleFeature = { title: string; body: string };
+type RoleContent = {
+  kicker: string;
+  title: string;
+  subtitle: string;
+  body: string;
+  cta: string;
+  placeholder: string;
+  features: RoleFeature[];
+};
+type PolicyContent = {
+  title: string;
+  intro: string;
+  missing: string;
+  contact: string;
+};
 type Copy = {
   nav: string[];
   heroKicker: string;
@@ -79,6 +97,13 @@ type Copy = {
   placed: string;
   today: string;
   chooseSize: string;
+  consumers: RoleContent;
+  drivers: RoleContent;
+  privacy: PolicyContent;
+  security: PolicyContent;
+  privacyLabel: string;
+  securityLabel: string;
+  backHome: string;
 };
 
 const translations: Record<Lang, Copy> = {
@@ -115,6 +140,53 @@ const translations: Record<Lang, Copy> = {
     placed: 'تم استلام طلبك',
     today: 'اليوم، خلال 45 دقيقة',
     chooseSize: 'اختر الكمية',
+    consumers: {
+      kicker: 'للمستهلكين',
+      title: 'مياه شرب نقية تصلك أينما كنت',
+      subtitle: 'اطلب بضغطة واحدة، وتتبع طلبك لحظة بلحظة حتى يصل إلى بابك',
+      body: 'لا داعي للانتظار في الطوابير أو حمل القوارير الثقيلة بنفسك. مع Mizu، تطلب كمية المياه التي تحتاجها من هاتفك، وسائق موثوق وقريب منك يتكفل بالباقي — بسرعة وشفافية كاملة في كل خطوة.',
+      cta: 'حمّل التطبيق الآن واطلب أول كمية مياهك خلال دقائق',
+      placeholder: 'شاشة طلب المستهلك',
+      features: [
+        { title: 'طلب في ثوانٍ', body: 'اختر الكمية اللي تحتاجها (من 5 لتر إلى 1000 لتر) وأتمم طلبك بضغطة واحدة، بلا تعقيد.' },
+        { title: 'تحديد الموقع تلقائياً', body: 'التطبيق يحدد موقعك بدقة، أو احفظ عدة عناوين (المنزل، العمل...) لطلب أسرع في كل مرة.' },
+        { title: 'تتبع لحظي للسائق', body: 'شاهد سائقك يقترب منك على الخريطة في الوقت الفعلي، وتوقّع وقت الوصول بدقة.' },
+        { title: 'سائقوك المفضّلون', body: 'أعجبك أسلوب سائق معيّن؟ أضفه لقائمة السائقون المفضلون واطلب منه مباشرة في المرات القادمة.' },
+        { title: 'شفافية كاملة في السعر', body: 'تعرف السعر الإجمالي قبل تأكيد الطلب، بلا مفاجآت أو رسوم خفية.' },
+        { title: 'دعم متواصل', body: 'أي استفسار أو مشكلة؟ فريق الدعم الفني حاضر عبر شات مباشر داخل التطبيق.' },
+      ],
+    },
+    drivers: {
+      kicker: 'للسائقين',
+      title: 'انضم إلى عائلة سائقي Mizu',
+      subtitle: 'حوّل وقتك إلى دخل حقيقي، وكن جزءاً من أول شبكة توصيل مياه في الجزائر',
+      body: 'كن سائقاً مستقلاً مع Mizu وابدأ باستقبال طلبات التوصيل في منطقتك مباشرة على هاتفك. نظامنا صمّم ليمنحك الحرية الكاملة: تختار متى تعمل، وأين تعمل، وكم طلب تقبل في اليوم — بلا التزامات ثابتة وبلا ضغط.',
+      cta: 'سجّل كسائق الآن وابدأ أول يوم عمل لك خلال دقائق',
+      placeholder: 'لوحة تحكم السائق',
+      features: [
+        { title: 'دخل إضافي مرن', body: 'اقبل الطلبات في الأوقات التي تناسبك، وتابع أرباحك اليومية والشهرية لحظياً من لوحة التحكم الخاصة بك.' },
+        { title: 'طلبات قريبة منك', body: 'يصلك إشعار فوري بكل طلب جديد في منطقتك، مع كل التفاصيل: الكمية، السعر، وموقع الزبون بدقة.' },
+        { title: 'نظام اشتراك شفاف', body: 'اشتراك شهري بسيط يمنحك وصولاً كاملاً لكل الطلبات المتاحة، مع تتبع واضح للمدة المتبقية.' },
+        { title: 'حالة تواجد بلمسة واحدة', body: 'بدّل بين حاضر، استراحة، أو مغلق حسب ظروفك، والنظام يتوقف عن إرسال طلبات لك تلقائياً عند عدم التواجد.' },
+        { title: 'بناء سمعتك', body: 'كل عميل يقيّمك بعد التوصيل، وكلما ارتفع تقييمك زادت فرصك في أن يختارك الزبائن كسائق مفضّل.' },
+        { title: 'دعم فني حاضر دائماً', body: 'فريق Mizu يرد على استفساراتك ومشاكلك عبر شات مباشر داخل التطبيق.' },
+      ],
+    },
+    privacy: {
+      title: 'سياسة الخصوصية',
+      intro: 'نحرص على أن يكون استخدامك لـ Mizu واضحاً وآمناً. النص الكامل لسياسة الخصوصية سيُدرج هنا فور تزويدنا بالنسخة المعتمدة.',
+      missing: '[الصق هنا نص "سياسة الخصوصية" كاملاً من قسم "أولاً: المحتوى النصي" أعلاه]',
+      contact: 'للاستفسارات: [البريد الإلكتروني للدعم/الأمان]',
+    },
+    security: {
+      title: 'سياسة الأمان',
+      intro: 'نلتزم بحماية حسابك وبياناتك أثناء استخدام Mizu. النص الكامل لسياسة الأمان سيُدرج هنا فور تزويدنا بالنسخة المعتمدة.',
+      missing: '[الصق هنا نص "سياسة الأمان" كاملاً من قسم "أولاً: المحتوى النصي" أعلاه]',
+      contact: 'للإبلاغ عن مشكلة أمنية: [البريد الإلكتروني للدعم/الأمان]',
+    },
+    privacyLabel: 'سياسة الخصوصية',
+    securityLabel: 'سياسة الأمان',
+    backHome: 'العودة إلى الرئيسية',
   },
   fr: {
     nav: ['Accueil', 'Avantages', 'Comment ça marche', 'Télécharger', 'Contact'],
@@ -149,6 +221,53 @@ const translations: Record<Lang, Copy> = {
     placed: 'Commande reçue',
     today: 'Aujourd’hui, sous 45 min',
     chooseSize: 'Choisissez le volume',
+    consumers: {
+      kicker: 'Pour les consommateurs',
+      title: 'Une eau potable pure, où que vous soyez',
+      subtitle: 'Commandez en un geste et suivez votre livraison jusqu’à votre porte',
+      body: 'Fini les files d’attente et les bouteilles lourdes à transporter. Avec Mizu, commandez la quantité d’eau qu’il vous faut depuis votre téléphone et laissez un chauffeur fiable et proche s’occuper du reste — rapidement et en toute transparence.',
+      cta: 'Téléchargez l’app et commandez votre première quantité d’eau en quelques minutes',
+      placeholder: 'Écran de commande consommateur',
+      features: [
+        { title: 'Commander en quelques secondes', body: 'Choisissez la quantité souhaitée (de 5 à 1000 litres) et finalisez en un geste, sans complication.' },
+        { title: 'Localisation automatique', body: 'L’application repère votre position avec précision ou enregistre vos adresses pour commander plus vite.' },
+        { title: 'Suivi du chauffeur en direct', body: 'Visualisez votre chauffeur sur la carte en temps réel et prévoyez précisément son heure d’arrivée.' },
+        { title: 'Vos chauffeurs préférés', body: 'Vous aimez un chauffeur ? Ajoutez-le à vos favoris et commandez directement auprès de lui.' },
+        { title: 'Prix totalement transparent', body: 'Découvrez le montant total avant de confirmer, sans surprise ni frais cachés.' },
+        { title: 'Un support toujours présent', body: 'Une question ou un problème ? Notre équipe vous répond par chat directement dans l’application.' },
+      ],
+    },
+    drivers: {
+      kicker: 'Pour les chauffeurs',
+      title: 'Rejoignez la famille des chauffeurs Mizu',
+      subtitle: 'Transformez votre temps en revenu réel et participez au premier réseau de livraison d’eau en Algérie',
+      body: 'Devenez chauffeur indépendant avec Mizu et recevez des demandes de livraison dans votre zone directement sur votre téléphone. Notre système vous offre une liberté totale : choisissez quand travailler, où travailler et combien de commandes accepter — sans engagement fixe ni pression.',
+      cta: 'Inscrivez-vous comme chauffeur et commencez votre première journée en quelques minutes',
+      placeholder: 'Tableau de bord chauffeur',
+      features: [
+        { title: 'Un revenu supplémentaire flexible', body: 'Acceptez les demandes quand cela vous convient et suivez vos revenus quotidiens et mensuels en direct.' },
+        { title: 'Des demandes près de chez vous', body: 'Recevez une alerte pour chaque nouvelle demande dans votre zone, avec quantité, prix et adresse précise.' },
+        { title: 'Un abonnement transparent', body: 'Un abonnement mensuel simple vous donne accès aux commandes disponibles, avec une durée restante claire.' },
+        { title: 'Votre disponibilité en un geste', body: 'Passez de disponible à pause ou fermé selon vos besoins : le système arrête automatiquement les demandes.' },
+        { title: 'Construisez votre réputation', body: 'Chaque client vous évalue après la livraison ; une meilleure note augmente vos chances d’être choisi.' },
+        { title: 'Un support technique toujours présent', body: 'L’équipe Mizu répond à vos questions et vous accompagne via un chat dans l’application.' },
+      ],
+    },
+    privacy: {
+      title: 'Politique de confidentialité',
+      intro: 'Nous voulons que votre utilisation de Mizu soit claire et sûre. Le texte complet de la politique de confidentialité sera ajouté dès réception de la version approuvée.',
+      missing: '[Collez ici le texte complet de la « Politique de confidentialité » de la section « Premièrement : contenu textuel » ci-dessus]',
+      contact: 'Pour toute question : [e-mail du support/de la sécurité]',
+    },
+    security: {
+      title: 'Politique de sécurité',
+      intro: 'Nous nous engageons à protéger votre compte et vos données lorsque vous utilisez Mizu. Le texte complet de la politique de sécurité sera ajouté dès réception de la version approuvée.',
+      missing: '[Collez ici le texte complet de la « Politique de sécurité » de la section « Premièrement : contenu textuel » ci-dessus]',
+      contact: 'Pour signaler un problème de sécurité : [e-mail du support/de la sécurité]',
+    },
+    privacyLabel: 'Politique de confidentialité',
+    securityLabel: 'Politique de sécurité',
+    backHome: 'Retour à l’accueil',
   },
   en: {
     nav: ['Home', 'Features', 'How it works', 'Download', 'Contact'],
@@ -183,6 +302,53 @@ const translations: Record<Lang, Copy> = {
     placed: 'Order received',
     today: 'Today, within 45 min',
     chooseSize: 'Choose your volume',
+    consumers: {
+      kicker: 'For consumers',
+      title: 'Pure drinking water, wherever you are',
+      subtitle: 'Order in one tap and follow your delivery moment by moment to your door',
+      body: 'No more waiting in lines or carrying heavy bottles yourself. With Mizu, order the amount of water you need from your phone, and a trusted driver nearby takes care of the rest — quickly and with full transparency at every step.',
+      cta: 'Download the app and order your first water delivery in minutes',
+      placeholder: 'Consumer order screen',
+      features: [
+        { title: 'Order in seconds', body: 'Choose the amount you need (from 5 to 1000 litres) and complete your order in one tap, without the hassle.' },
+        { title: 'Automatic location', body: 'The app pinpoints your location or saves several addresses, such as home and work, for faster ordering.' },
+        { title: 'Live driver tracking', body: 'Watch your driver approach on the map in real time and see exactly when they will arrive.' },
+        { title: 'Favourite drivers', body: 'Like a particular driver? Add them to your favourites and order from them directly next time.' },
+        { title: 'Fully transparent pricing', body: 'Know the total price before confirming your order, with no surprises or hidden fees.' },
+        { title: 'Ongoing support', body: 'Have a question or a problem? Our support team is available through in-app live chat.' },
+      ],
+    },
+    drivers: {
+      kicker: 'For drivers',
+      title: 'Join the Mizu driver family',
+      subtitle: 'Turn your time into real income and become part of Algeria’s first water delivery network',
+      body: 'Become an independent Mizu driver and start receiving delivery requests in your area directly on your phone. Our system gives you complete freedom: choose when you work, where you work, and how many orders you accept each day — with no fixed commitments and no pressure.',
+      cta: 'Register as a driver and start your first workday in minutes',
+      placeholder: 'Driver dashboard screen',
+      features: [
+        { title: 'Flexible extra income', body: 'Accept orders when it suits you and track your daily and monthly earnings live from your dashboard.' },
+        { title: 'Orders close to you', body: 'Get an instant alert for every new order in your area, with the quantity, price, and exact customer location.' },
+        { title: 'A transparent subscription', body: 'A simple monthly subscription gives you full access to available orders, with a clear view of the remaining time.' },
+        { title: 'One-tap availability', body: 'Switch between available, on break, or closed; the system stops sending requests automatically when you are away.' },
+        { title: 'Build your reputation', body: 'Every customer rates you after delivery, and higher ratings mean more chances to be chosen as a favourite driver.' },
+        { title: 'Support that is always there', body: 'The Mizu team answers your questions and helps solve issues through in-app live chat.' },
+      ],
+    },
+    privacy: {
+      title: 'Privacy Policy',
+      intro: 'We want your experience with Mizu to be clear and safe. The full privacy policy will be added as soon as the approved version is provided.',
+      missing: '[Paste the full “Privacy Policy” text from the “First: Text content” section above here]',
+      contact: 'For questions: [support/security email]',
+    },
+    security: {
+      title: 'Security Policy',
+      intro: 'We are committed to protecting your account and data while you use Mizu. The full security policy will be added as soon as the approved version is provided.',
+      missing: '[Paste the full “Security Policy” text from the “First: Text content” section above here]',
+      contact: 'To report a security issue: [support/security email]',
+    },
+    privacyLabel: 'Privacy Policy',
+    securityLabel: 'Security Policy',
+    backHome: 'Back to home',
   },
 };
 
@@ -319,6 +485,120 @@ function PhonePreview({ copy }: { copy: Copy }) {
   );
 }
 
+function PlaceholderPhone({ role, label, isArabic }: { role: 'consumer' | 'driver'; label: string; isArabic: boolean }) {
+  const imageName = role === 'consumer' ? 'consumer-order-screen' : 'driver-dashboard-screen';
+  return (
+    <div className="phone-shell w-[230px] sm:w-[270px]" data-testid={`placeholder-phone-${role}`}>
+      <div className="phone-screen min-h-[500px] overflow-hidden">
+        <div className="flex items-center justify-between border-b border-white/[.08] px-4 py-4">
+          <div className="h-7 w-7 rounded-full bg-white/[.08]" />
+          <BrandMark compact />
+          <div className="h-7 w-7 rounded-full bg-white/[.08]" />
+        </div>
+        <div className="flex min-h-[430px] flex-col items-center justify-center p-7 text-center">
+          <div className={`grid h-20 w-20 place-items-center rounded-[26px] ${role === 'consumer' ? 'bg-cyan-300/15 text-cyan-300' : 'bg-[#00e0a0]/15 text-[#00e0a0]'} shadow-[0_0_45px_rgba(33,190,232,.14)]`}>
+            {role === 'consumer' ? <Package size={34} /> : <Gauge size={34} />}
+          </div>
+          <div className="mt-7 text-[10px] font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'صورة مؤقتة' : 'Image placeholder'}</div>
+          <div className="mt-2 text-base font-bold text-white">{label}</div>
+          <code dir="ltr" className="mt-4 rounded-xl border border-dashed border-cyan-300/35 bg-cyan-300/[.06] px-3 py-2 text-[9px] text-cyan-200">
+            data-image="{imageName}"
+          </code>
+          <p className="mt-5 max-w-[175px] text-[10px] leading-5 text-slate-500">
+            {isArabic ? 'استبدل هذا الإطار بلقطة الشاشة الحقيقية لاحقاً.' : 'Replace this frame with the final product screenshot later.'}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RoleFeatureSection({ id, role, content, isArabic }: { id: string; role: 'consumer' | 'driver'; content: RoleContent; isArabic: boolean }) {
+  const icons = role === 'consumer'
+    ? [Package, LocateFixed, RouteIcon, Heart, ShieldCheck, Headphones]
+    : [CircleDollarSign, MapPin, ShieldCheck, Zap, Star, Headphones];
+  const accent = role === 'consumer' ? 'cyan' : 'teal';
+  return (
+    <section id={id} className={`relative overflow-hidden border-y border-white/[.06] py-28 sm:py-36 ${role === 'consumer' ? 'bg-[linear-gradient(135deg,#0a1220_0%,#0d1d31_52%,#07151e_100%)]' : 'bg-[linear-gradient(135deg,#09151b_0%,#0c282b_52%,#0a1422_100%)]'}`}>
+      <div className={`pointer-events-none absolute ${role === 'consumer' ? '-start-40 top-12 bg-cyan-300/[.08]' : '-end-40 bottom-10 bg-[#00e0a0]/[.08]'} h-[420px] w-[420px] rounded-full blur-[110px]`} />
+      <div className="section-shell relative">
+        <div className="grid items-center gap-14 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
+          <FadeIn className="flex justify-center lg:justify-start">
+            <PlaceholderPhone role={role} label={content.placeholder} isArabic={isArabic} />
+          </FadeIn>
+          <FadeIn delay={.08}>
+            <div className={`mb-4 text-[11px] font-bold uppercase tracking-[.24em] ${accent === 'teal' ? 'text-[#00e0a0]' : 'text-cyan-300'}`}>{content.kicker}</div>
+            <h2 className="max-w-[720px] text-4xl font-bold leading-[1.08] tracking-[-.05em] text-white sm:text-6xl">{content.title}</h2>
+            <p className={`mt-5 max-w-[650px] text-lg font-semibold leading-8 ${accent === 'teal' ? 'text-[#8cf5d2]' : 'text-cyan-100/90'}`}>{content.subtitle}</p>
+            <p className="mt-5 max-w-[670px] text-sm leading-7 text-slate-300/70">{content.body}</p>
+            <a href={PLAY_STORE_URL} className={`mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-sm font-bold transition hover:-translate-y-1 ${accent === 'teal' ? 'border border-[#00e0a0]/30 bg-[#00e0a0]/10 text-[#5ff2c3]' : 'bg-[#24b8e8] text-[#06111e] cyan-glow'}`} data-testid={`link-${role}-cta`}>
+              <Play size={15} fill="currentColor" />{content.cta}<ArrowUpRight size={15} />
+            </a>
+          </FadeIn>
+        </div>
+        <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {content.features.map(({ title, body }, index) => {
+            const Icon = icons[index];
+            return (
+              <FadeIn key={title} delay={index * .04}>
+                <div className="group relative min-h-[205px] overflow-hidden rounded-3xl border border-white/[.09] bg-[#07101d]/65 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30" data-testid={`card-${role}-feature-${index}`}>
+                  <div className={`mb-10 grid h-11 w-11 place-items-center rounded-2xl ${accent === 'teal' ? 'bg-[#00e0a0]/15 text-[#00e0a0]' : 'bg-cyan-400/15 text-cyan-300'} transition group-hover:scale-110`}><Icon size={20} /></div>
+                  <h3 className="mb-2 text-base font-bold text-white">{title}</h3>
+                  <p className="max-w-[300px] text-sm leading-6 text-slate-400/80">{body}</p>
+                  <div className={`absolute -bottom-10 -end-10 h-28 w-28 rounded-full border ${accent === 'teal' ? 'border-[#00e0a0]/10' : 'border-cyan-300/10'} transition group-hover:scale-125`} />
+                </div>
+              </FadeIn>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PolicyPage({ kind }: { kind: 'privacy' | 'security' }) {
+  const [lang, setLang] = useState<Lang>('ar');
+  const copy = translations[lang];
+  const content = copy[kind];
+  const isArabic = lang === 'ar';
+  useEffect(() => {
+    document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  }, [isArabic, lang]);
+
+  return (
+    <div className={`min-h-screen bg-[#080e1b] text-slate-200 ${isArabic ? 'font-arabic' : ''}`} dir={isArabic ? 'rtl' : 'ltr'}>
+      <header className="border-b border-white/[.06] bg-[#080e1b]/90">
+        <div className="section-shell flex min-h-[74px] items-center justify-between gap-4">
+          <a href="/" data-testid="link-policy-home"><BrandMark /></a>
+          <LanguageSwitcher lang={lang} setLang={setLang} />
+        </div>
+      </header>
+      <main className="px-5 py-20 sm:py-28">
+        <article className="mx-auto max-w-[800px]">
+          <a href="/" className="mb-10 inline-flex items-center gap-2 text-sm text-cyan-300 transition hover:text-cyan-200" data-testid="link-policy-back">
+            <ChevronLeft size={16} />{copy.backHome}
+          </a>
+          <div className={`mb-4 text-[11px] font-bold uppercase tracking-[.24em] ${kind === 'security' ? 'text-[#00e0a0]' : 'text-cyan-300'}`}>{kind === 'security' ? copy.securityLabel : copy.privacyLabel}</div>
+          <h1 className="text-4xl font-bold tracking-[-.05em] text-white sm:text-6xl">{content.title}</h1>
+          <p className="mt-7 text-base leading-8 text-slate-300/80">{content.intro}</p>
+          <div className="mt-10 rounded-3xl border border-white/[.1] bg-white/[.03] p-6 sm:p-9">
+            <h2 className="text-lg font-bold text-white">{isArabic ? 'النص الكامل للسياسة' : lang === 'fr' ? 'Texte complet de la politique' : 'Full policy text'}</h2>
+            <p className="mt-5 whitespace-pre-wrap text-sm leading-8 text-slate-400">{content.missing}</p>
+          </div>
+          <p className="mt-7 border-s-2 border-cyan-300/50 ps-4 text-sm leading-7 text-slate-400">{content.contact}</p>
+        </article>
+      </main>
+      <footer className="border-t border-white/[.06] py-6">
+        <div className="section-shell flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-600">
+          <span>{copy.rights}</span>
+          <a href="/" className="text-cyan-300 hover:text-cyan-200">{copy.backHome}</a>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
 function App() {
   const [lang, setLang] = useState<Lang>('ar');
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -338,15 +618,6 @@ function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenu(false);
   };
-
-  const features = useMemo(() => [
-    { icon: RouteIcon, title: isArabic ? 'تتبع حي على الخريطة' : lang === 'fr' ? 'Suivi en direct' : 'Live map tracking', body: isArabic ? 'شاهد طريق السائق لحظة بلحظة حتى يصل إلى بابك.' : lang === 'fr' ? 'Suivez votre chauffeur à chaque instant, jusqu’à votre porte.' : 'Watch your driver move in real time, all the way to your door.', accent: 'cyan' },
-    { icon: Bell, title: isArabic ? 'تنبيهات في وقتها' : lang === 'fr' ? 'Alertes au bon moment' : 'Timely updates', body: isArabic ? 'نعلمك عندما يقترب السائق أو يتغير وضع طلبك.' : lang === 'fr' ? 'Recevez une notification quand votre chauffeur approche.' : 'Know when your driver is close and when your order changes.', accent: 'teal' },
-    { icon: MapPin, title: isArabic ? 'عناوينك محفوظة' : lang === 'fr' ? 'Vos adresses gardées' : 'Saved addresses', body: isArabic ? 'المنزل، العمل، أو أي مكان آخر. اطلب من دون إعادة الكتابة.' : lang === 'fr' ? 'Maison, travail, ou autre. Commandez sans tout retaper.' : 'Home, work, or anywhere else. Order without typing it again.', accent: 'cyan' },
-    { icon: Heart, title: isArabic ? 'سائقون تفضلهم' : lang === 'fr' ? 'Vos chauffeurs préférés' : 'Favourite drivers', body: isArabic ? 'قيّم تجربتك واحتفظ بالسائقين الذين تثق بهم.' : lang === 'fr' ? 'Notez votre expérience et retrouvez les chauffeurs de confiance.' : 'Rate your experience and keep the drivers you trust close.', accent: 'pink' },
-    { icon: Headphones, title: isArabic ? 'دعم قريب منك' : lang === 'fr' ? 'Un support à portée de main' : 'Human support', body: isArabic ? 'فريق Mizu جاهز للمساعدة من داخل التطبيق.' : lang === 'fr' ? 'L’équipe Mizu est là pour vous aider, directement dans l’app.' : 'The Mizu team is ready to help, right inside the app.', accent: 'teal' },
-    { icon: ShieldCheck, title: isArabic ? 'خدمة عبر الجزائر' : lang === 'fr' ? 'Partout en Algérie' : 'Across Algeria', body: isArabic ? 'نبني شبكة توصيل تصل إلى المزيد من الولايات كل يوم.' : lang === 'fr' ? 'Notre réseau grandit dans toujours plus de wilayas.' : 'Our delivery network reaches more wilayas every day.', accent: 'cyan' },
-  ], [isArabic, lang]);
 
   const steps = isArabic
     ? [{ number: '01', title: 'أنشئ حسابك', body: 'دقائق قليلة، ومعلومات بسيطة للبدء.' }, { number: '02', title: 'اختر كمية الماء', body: '5L، 10L، 20L أو أكثر — أنت تختار.' }, { number: '03', title: 'تابع السائق', body: 'خريطة حية ووقت وصول واضح.' }, { number: '04', title: 'قيّم تجربتك', body: 'رأيك يجعل Mizu أفضل للجميع.' }]
@@ -417,14 +688,9 @@ function App() {
           </div>
         </section>
 
-        <section id="features" className="relative py-28 sm:py-36">
-          <div className="section-shell">
-            <FadeIn><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.featureKicker}</div><div className="grid items-end gap-6 lg:grid-cols-[.75fr_1fr]"><h2 className="whitespace-pre-line text-4xl font-bold leading-[1.05] tracking-[-.05em] text-white sm:text-6xl">{copy.featureTitle}</h2><p className="max-w-[440px] text-sm leading-7 text-slate-400">{copy.featureBody}</p></div></FadeIn>
-            <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map(({ icon: Icon, title, body, accent }, index) => <FadeIn key={title} delay={index * .05}><div className="group relative min-h-[220px] overflow-hidden rounded-3xl border border-white/[.09] bg-[#0c1628]/75 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30" data-testid={`card-feature-${index}`}><div className={`mb-12 grid h-11 w-11 place-items-center rounded-2xl ${accent === 'pink' ? 'bg-[#ff4d6d]/15 text-[#ff7890]' : accent === 'teal' ? 'bg-[#00e0a0]/15 text-[#00e0a0]' : 'bg-cyan-400/15 text-cyan-300'} transition group-hover:scale-110`}><Icon size={20} /></div><h3 className="mb-2 text-base font-bold text-white">{title}</h3><p className="max-w-[270px] text-sm leading-6 text-slate-500">{body}</p><div className="absolute -bottom-8 -end-8 h-28 w-28 rounded-full border border-white/[.04] transition group-hover:scale-125" /></div></FadeIn>)}
-            </div>
-          </div>
-        </section>
+         <RoleFeatureSection id="features" role="consumer" content={copy.consumers} isArabic={isArabic} />
+
+         <RoleFeatureSection id="drivers" role="driver" content={copy.drivers} isArabic={isArabic} />
 
         <section id="how-it-works" className="relative overflow-hidden border-y border-white/[.06] bg-[#0a1323] py-28 sm:py-36">
           <div className="pointer-events-none absolute end-[-160px] top-[-180px] h-[520px] w-[520px] rounded-full bg-[#00e0a0]/[.06] blur-[100px]" />
@@ -445,16 +711,6 @@ function App() {
           <div className="section-shell mt-2 flex items-center justify-between sm:hidden"><span className="text-xs text-slate-500">{activeSlide + 1} / {screenshotData.length}</span><div className="flex gap-2"><button onClick={() => moveCarousel(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10" data-testid="button-carousel-prev-mobile"><ChevronLeft size={15} /></button><button onClick={() => moveCarousel(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10" data-testid="button-carousel-next-mobile"><ChevronRight size={15} /></button></div></div>
         </section>
 
-        <section className="relative px-5 pb-28 sm:pb-36">
-          <div className="section-shell overflow-hidden rounded-[2rem] border border-cyan-300/15 bg-[linear-gradient(115deg,#10253b_0%,#0d2831_53%,#112035_100%)] p-7 sm:p-12 lg:p-16">
-            <div className="absolute h-56 w-56 rounded-full bg-cyan-300/10 blur-[75px]" />
-            <div className="relative grid items-center gap-12 lg:grid-cols-[1fr_.85fr]">
-              <FadeIn><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-[#00e0a0]">{copy.driverKicker}</div><h2 className="whitespace-pre-line text-4xl font-bold leading-[1.02] tracking-[-.05em] text-white sm:text-6xl">{copy.driverTitle}</h2><p className="mt-6 max-w-[450px] text-sm leading-7 text-slate-300/70">{copy.driverBody}</p><a href={PLAY_STORE_URL} className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#00e0a0]/30 bg-[#00e0a0]/10 px-5 py-3 text-sm font-bold text-[#5ff2c3] transition hover:bg-[#00e0a0]/20" data-testid="link-driver-download">{copy.driverButton}<ArrowUpRight size={15} /></a></FadeIn>
-              <FadeIn delay={.1} className="relative mx-auto w-full max-w-[380px]"><div className="glass rounded-3xl p-5 shadow-2xl"><div className="mb-5 flex items-center justify-between"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-cyan-300/15 text-cyan-300"><Truck size={20} /></div><div><div className="text-sm font-bold text-white">Mizu Driver</div><div className="text-[10px] text-slate-500">Algiers · Zone 03</div></div></div><div className="h-2 w-2 rounded-full bg-[#00e0a0]" /></div><div className="rounded-2xl bg-[#081422] p-4"><div className="mb-3 flex items-center justify-between text-xs"><span className="text-slate-500">Today’s route</span><span className="text-[#00e0a0]">+ 4,800 DZD</span></div><div className="flex items-end gap-1.5">{[40, 62, 48, 80, 68, 92, 74].map((height, i) => <div key={i} className="flex-1 rounded-full bg-cyan-300/20" style={{ height: `${height}px` }}><div className="h-1/2 rounded-full bg-cyan-300/70" /></div>)}</div></div><div className="mt-3 flex items-center justify-between rounded-2xl bg-[#00e0a0]/10 p-3 text-xs"><span className="flex items-center gap-2 text-slate-300"><Package size={14} className="text-[#00e0a0]" /> 12 deliveries</span><span className="text-[#00e0a0]">On track</span></div></div></FadeIn>
-            </div>
-          </div>
-        </section>
-
         <section id="download" className="relative overflow-hidden border-y border-white/[.06] py-28 sm:py-36">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(25,171,221,.16),transparent_65%)]" />
           <FadeIn className="section-shell relative text-center"><div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-cyan-300/15 text-cyan-300"><Droplets size={25} /></div><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.finalKicker}</div><h2 className="text-5xl font-bold tracking-[-.06em] text-white sm:text-7xl">{copy.finalTitle}</h2><p className="mx-auto mt-6 max-w-[480px] text-sm leading-7 text-slate-400">{copy.finalBody}</p><div className="mt-8 flex flex-wrap justify-center gap-3"><a href={PLAY_STORE_URL} className="inline-flex items-center gap-3 rounded-full bg-[#24b8e8] px-6 py-3.5 text-sm font-bold text-[#06111e] cyan-glow transition hover:-translate-y-1" data-testid="link-final-download"><Play size={16} fill="currentColor" /><span><small className="block text-[9px] font-medium opacity-70">GET IT ON</small>{copy.download}</span></a><button disabled className="inline-flex cursor-not-allowed items-center gap-3 rounded-full border border-white/10 bg-white/[.04] px-6 py-3 text-start text-sm font-semibold text-slate-500" data-testid="button-app-store"><span className="text-xl"></span><span><small className="block text-[9px] font-medium">AVAILABLE</small>{copy.appStore}</span></button></div></FadeIn>
@@ -464,8 +720,8 @@ function App() {
       <footer id="contact" className="bg-[#060b15] pt-16">
         <div className="section-shell grid gap-12 pb-14 md:grid-cols-[1.4fr_.7fr_.7fr]">
           <div><BrandMark compact /><p className="mt-5 max-w-[260px] text-sm leading-6 text-slate-500">{copy.footerBody}</p><a href="mailto:hello@mizu.dz" className="mt-5 inline-flex items-center gap-2 text-sm text-cyan-300 hover:text-cyan-200" data-testid="link-email"><Send size={14} /> hello@mizu.dz</a></div>
-          <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'روابط سريعة' : lang === 'fr' ? 'Liens rapides' : 'Explore'}</div><div className="flex flex-col items-start gap-3 text-sm text-slate-400"><button onClick={() => scrollTo('features')} data-testid="link-footer-features">{copy.nav[1]}</button><button onClick={() => scrollTo('how-it-works')} data-testid="link-footer-how">{copy.nav[2]}</button><button onClick={() => scrollTo('download')} data-testid="link-footer-download">{copy.nav[3]}</button></div></div>
-          <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'ابقَ قريباً' : lang === 'fr' ? 'Restons proches' : 'Stay close'}</div><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-facebook"><Facebook size={16} /> Facebook <ArrowUpRight size={13} /></a><a href="mailto:support@mizu.dz" className="mt-4 flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-support"><CircleHelp size={16} /> {copy.support}</a></div>
+           <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'روابط سريعة' : lang === 'fr' ? 'Liens rapides' : 'Explore'}</div><div className="flex flex-col items-start gap-3 text-sm text-slate-400"><button onClick={() => scrollTo('features')} data-testid="link-footer-features">{copy.nav[1]}</button><button onClick={() => scrollTo('drivers')} data-testid="link-footer-drivers">{copy.drivers.kicker}</button><button onClick={() => scrollTo('how-it-works')} data-testid="link-footer-how">{copy.nav[2]}</button><button onClick={() => scrollTo('download')} data-testid="link-footer-download">{copy.nav[3]}</button></div></div>
+           <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'ابقَ قريباً' : lang === 'fr' ? 'Restons proches' : 'Stay close'}</div><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-facebook"><Facebook size={16} /> Facebook <ArrowUpRight size={13} /></a><a href="mailto:support@mizu.dz" className="mt-4 flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-support"><CircleHelp size={16} /> {copy.support}</a><div className="mt-5 flex flex-col items-start gap-3 text-sm text-slate-400"><a href="/privacy-policy" className="transition hover:text-cyan-300" data-testid="link-footer-privacy">{copy.privacyLabel}</a><a href="/security-policy" className="transition hover:text-cyan-300" data-testid="link-footer-security">{copy.securityLabel}</a></div></div>
         </div>
         <div className="border-t border-white/[.06]"><div className="section-shell flex flex-wrap items-center justify-between gap-3 py-5 text-[11px] text-slate-600"><span>{copy.rights}</span><span className="flex items-center gap-1.5"><MapPin size={12} />Algeria</span></div></div>
       </footer>
@@ -474,7 +730,7 @@ function App() {
 }
 
 function Router() {
-  return <RoutedErrorBoundary><Switch><Route path="/" component={App} /><Route component={NotFound} /></Switch></RoutedErrorBoundary>;
+  return <RoutedErrorBoundary><Switch><Route path="/" component={App} /><Route path="/privacy-policy"><PolicyPage kind="privacy" /></Route><Route path="/security-policy"><PolicyPage kind="security" /></Route><Route component={NotFound} /></Switch></RoutedErrorBoundary>;
 }
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
