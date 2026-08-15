@@ -38,7 +38,6 @@ import NotFound from '@/pages/not-found';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
 import loginScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٨-٢٨-٣٥٠_com.mizu.app_1786818650485.jpg';
 import registerScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٨-٥٠-٩٩٧_com.mizu.app_1786818654257.jpg';
-import homeScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٠٣-٥٧٢_com.mizu.app_1786818657497.jpg';
 import orderScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٠٦-٢٠٨_com.mizu.app_1786818661708.jpg';
 import ordersScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٣٨-٥٤٧_com.mizu.app_1786818666483.jpg';
 import supportScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٤٨-٧٨٩_com.mizu.app_1786818671143.jpg';
@@ -63,6 +62,16 @@ type PolicyContent = {
   intro: string;
   missing: string;
   contact: string;
+};
+type ShowcaseCopy = {
+  login: string;
+  register: string;
+  driverTitle: string;
+  driverBody: string;
+  ordersTitle: string;
+  ordersBody: string;
+  supportTitle: string;
+  supportBody: string;
 };
 type Copy = {
   nav: string[];
@@ -104,6 +113,7 @@ type Copy = {
   privacyLabel: string;
   securityLabel: string;
   backHome: string;
+  showcase: ShowcaseCopy;
 };
 
 const translations: Record<Lang, Copy> = {
@@ -187,6 +197,16 @@ const translations: Record<Lang, Copy> = {
     privacyLabel: 'سياسة الخصوصية',
     securityLabel: 'سياسة الأمان',
     backHome: 'العودة إلى الرئيسية',
+    showcase: {
+      login: 'تسجيل الدخول',
+      register: 'إنشاء حساب',
+      driverTitle: 'لوحة السائق الذكية',
+      driverBody: 'تعرض كل الطلبات المتاحة في منطقتك لحظياً، مع تفاصيل الكمية والسعر وموقع الزبون، لتختار وتقبل الطلب المناسب لك بضغطة واحدة.',
+      ordersTitle: 'اطلب وتابع بكل بساطة',
+      ordersBody: 'اختر كمية المياه التي تحتاجها من قائمة واسعة تبدأ من 5 لتر وحتى 1000 لتر، وتابع كل طلباتك السابقة والحالية من مكان واحد بكل وضوح.',
+      supportTitle: 'دعم فوري حين تحتاجه',
+      supportBody: 'تواصل مباشرة مع فريق Mizu عبر شات داخل التطبيق، وسنرد على استفسارك أو مشكلتك بأسرع وقت ممكن.',
+    },
   },
   fr: {
     nav: ['Accueil', 'Avantages', 'Comment ça marche', 'Télécharger', 'Contact'],
@@ -268,6 +288,16 @@ const translations: Record<Lang, Copy> = {
     privacyLabel: 'Politique de confidentialité',
     securityLabel: 'Politique de sécurité',
     backHome: 'Retour à l’accueil',
+    showcase: {
+      login: 'Connexion',
+      register: 'Créer un compte',
+      driverTitle: 'Tableau de bord chauffeur',
+      driverBody: 'Affiche en temps réel toutes les commandes disponibles dans votre région, avec la quantité, le prix et la position du client, afin de choisir et d’accepter la commande qui vous convient en un seul geste.',
+      ordersTitle: 'Commandez et suivez en toute simplicité',
+      ordersBody: 'Choisissez la quantité d’eau dont vous avez besoin dans une large sélection allant de 5 à 1000 litres, et suivez toutes vos commandes passées et en cours depuis un seul endroit, en toute clarté.',
+      supportTitle: 'Une assistance immédiate quand vous en avez besoin',
+      supportBody: 'Contactez directement l’équipe Mizu via le chat intégré à l’application ; nous répondrons à votre question ou à votre problème dans les meilleurs délais.',
+    },
   },
   en: {
     nav: ['Home', 'Features', 'How it works', 'Download', 'Contact'],
@@ -349,34 +379,53 @@ const translations: Record<Lang, Copy> = {
     privacyLabel: 'Privacy Policy',
     securityLabel: 'Security Policy',
     backHome: 'Back to home',
+    showcase: {
+      login: 'Sign in',
+      register: 'Create account',
+      driverTitle: 'Smart driver dashboard',
+      driverBody: 'See every order available in your area in real time, with the quantity, price, and customer location, so you can choose and accept the right order in one tap.',
+      ordersTitle: 'Order and track with ease',
+      ordersBody: 'Choose the amount of water you need from a wide range starting at 5 litres and reaching 1000 litres, then follow all your past and current orders clearly from one place.',
+      supportTitle: 'Instant support when you need it',
+      supportBody: 'Reach the Mizu team directly through in-app chat, and we will answer your question or help with your issue as quickly as possible.',
+    },
   },
 };
-
-const screenshotData = [
-  { image: homeScreen, label: 'Dashboard', tone: 'cyan' },
-  { image: orderScreen, label: 'New order', tone: 'teal' },
-  { image: ordersScreen, label: 'Your orders', tone: 'pink' },
-  { image: loginScreen, label: 'Sign in', tone: 'cyan' },
-  { image: registerScreen, label: 'Create account', tone: 'teal' },
-  { image: supportScreen, label: 'Support', tone: 'pink' },
-];
 
 function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2.5" data-testid="brand-mizu">
-      <div className={`${compact ? 'h-9 w-9 rounded-xl' : 'h-11 w-11 rounded-[15px]'} relative grid place-items-center bg-[linear-gradient(145deg,#36d5ef,#0879c8)] cyan-glow`}>
-        <svg viewBox="0 0 44 44" className="h-7 w-7 text-white" fill="none" aria-label="Mizu tanker mark">
-          <path d="M7 25.5h26.7a3.3 3.3 0 0 1 3.3 3.3V31H7v-5.5Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round"/>
-          <path d="M11 25.3v-7.7a2 2 0 0 1 2-2h12.6a2 2 0 0 1 1.8 1.1l3.4 8.6M7 31v2.3M36.8 31v2.3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
-          <circle cx="13" cy="33.2" r="2.5" stroke="currentColor" strokeWidth="2"/>
-          <circle cx="31.2" cy="33.2" r="2.5" stroke="currentColor" strokeWidth="2"/>
-          <path d="M10 21h18M16 16v9" stroke="currentColor" strokeWidth="1.7" opacity=".7"/>
+      <div className={`${compact ? 'h-9 w-9 rounded-xl' : 'h-11 w-11 rounded-[15px]'} relative grid place-items-center border border-white/10 bg-[#07111d] shadow-[0_0_24px_rgba(36,184,232,.12)]`}>
+        <svg viewBox="0 0 44 44" className="h-7 w-7 text-cyan-100" fill="none" aria-label="Mizu water drop mark">
+          <path d="M22 5.5S10.5 17.2 10.5 24.8a11.5 11.5 0 0 0 23 0C33.5 17.2 22 5.5 22 5.5Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round"/>
+          <path d="M16 27.5c1.4 3.1 3.4 4.7 6 4.7" stroke="#62d5ef" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </div>
       <div className="leading-none">
         <div className="font-display text-[21px] font-bold tracking-[-.04em] text-white">Mizu</div>
         {!compact && <div className="mt-1 text-[9px] font-semibold uppercase tracking-[.2em] text-[#62d5ef]">water delivery</div>}
       </div>
+    </div>
+  );
+}
+
+function ShowcasePhone({ image, label, dataImage, compact = false }: { image?: string; label: string; dataImage: string; compact?: boolean }) {
+  return (
+    <div className="flex flex-col items-center" data-image={dataImage} data-testid={`showcase-phone-${dataImage}`}>
+      <div className={`phone-shell ${compact ? 'w-[150px] sm:w-[175px]' : 'w-[205px] sm:w-[245px]'} p-1.5`}>
+        <div className="phone-screen aspect-[.49] overflow-hidden">
+          {image ? (
+            <img src={image} alt={`Mizu ${label}`} className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full flex-col items-center justify-center gap-4 bg-[linear-gradient(160deg,#0c2135,#07111d)] p-5 text-center">
+              <div className="grid h-16 w-16 place-items-center rounded-[22px] border border-cyan-300/25 bg-cyan-300/10 text-cyan-200"><Droplets size={28} /></div>
+              <span className="text-[10px] font-bold uppercase tracking-[.16em] text-slate-500">Image placeholder</span>
+              <code dir="ltr" className="rounded-lg border border-dashed border-cyan-300/35 bg-cyan-300/[.06] px-2.5 py-1.5 text-[8px] text-cyan-200">data-image="{dataImage}"</code>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mt-4 text-center text-sm font-semibold text-slate-200">{label}</div>
     </div>
   );
 }
@@ -602,8 +651,6 @@ function PolicyPage({ kind }: { kind: 'privacy' | 'security' }) {
 function App() {
   const [lang, setLang] = useState<Lang>('ar');
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [activeSlide, setActiveSlide] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, .3], [0, 90]);
   const copy = translations[lang];
@@ -625,14 +672,6 @@ function App() {
       ? [{ number: '01', title: 'Créez votre compte', body: 'Quelques minutes et l’essentiel pour commencer.' }, { number: '02', title: 'Choisissez le volume', body: '5L, 10L, 20L ou plus — c’est vous qui décidez.' }, { number: '03', title: 'Suivez le chauffeur', body: 'Une carte en direct et une arrivée claire.' }, { number: '04', title: 'Notez l’expérience', body: 'Votre avis rend Mizu meilleur pour tous.' }]
       : [{ number: '01', title: 'Create your account', body: 'A few minutes and only what we need to begin.' }, { number: '02', title: 'Choose your volume', body: '5L, 10L, 20L or more — you decide.' }, { number: '03', title: 'Follow your driver', body: 'A live map and a clear arrival time.' }, { number: '04', title: 'Rate the experience', body: 'Your feedback makes Mizu better for everyone.' }];
 
-  const moveCarousel = (direction: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const next = Math.max(0, Math.min(screenshotData.length - 1, activeSlide + direction));
-    setActiveSlide(next);
-    track.scrollTo({ left: next * (track.clientWidth < 650 ? 216 : 285), behavior: 'smooth' });
-  };
-
   return (
     <div className={isArabic ? 'font-arabic' : ''} dir={isArabic ? 'rtl' : 'ltr'}>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[.06] bg-[#080e1b]/80 backdrop-blur-xl">
@@ -643,6 +682,7 @@ function App() {
           </nav>
           <div className="flex items-center gap-2">
             <div className="hidden sm:block"><LanguageSwitcher lang={lang} setLang={setLang} /></div>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label={copy.facebook} title={copy.facebook} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-300 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-cyan-200" data-testid="link-header-facebook"><Facebook size={15} /></a>
             <a href={APK_DOWNLOAD_URL} download="Mizu.apk" className="hidden rounded-full bg-[#20b5e6] px-4 py-2.5 text-xs font-bold text-[#06111d] cyan-glow transition hover:-translate-y-0.5 sm:inline-flex" data-testid="link-header-download">{copy.download}</a>
             <button onClick={() => setMobileMenu(!mobileMenu)} className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-200 lg:hidden" aria-label="Open menu" data-testid="button-mobile-menu">{mobileMenu ? <X size={18} /> : <Menu size={18} />}</button>
           </div>
@@ -703,12 +743,43 @@ function App() {
           </div>
         </section>
 
-        <section id="showcase" className="overflow-hidden py-28 sm:py-36">
-          <div className="section-shell mb-12 flex items-end justify-between gap-5"><FadeIn><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.appPreview}</div><h2 className="text-3xl font-bold tracking-[-.04em] text-white sm:text-5xl">{isArabic ? 'كل طلب، واضح أمامك.' : lang === 'fr' ? 'Chaque commande, sous vos yeux.' : 'Every order, right in front of you.'}</h2></FadeIn><div className="hidden gap-2 sm:flex"><button onClick={() => moveCarousel(-1)} className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-300 transition hover:border-cyan-300/40 hover:text-cyan-300" data-testid="button-carousel-prev"><ChevronLeft size={18} /></button><button onClick={() => moveCarousel(1)} className="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-300 transition hover:border-cyan-300/40 hover:text-cyan-300" data-testid="button-carousel-next"><ChevronRight size={18} /></button></div></div>
-          <div ref={trackRef} className="hide-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(20px,calc((100vw-1180px)/2))] pb-8" data-testid="screenshot-carousel">
-            {screenshotData.map((item, index) => <motion.div key={item.label} whileHover={{ y: -8 }} className="w-[195px] shrink-0 snap-start sm:w-[264px]" data-testid={`carousel-card-${index}`}><div className="phone-shell p-1.5"><div className="phone-screen aspect-[.49]"><img src={item.image} alt={`Mizu ${item.label} app screen`} className="h-full w-full object-cover" /></div></div><div className="mt-4 flex items-center justify-between px-1"><span className="text-sm font-semibold text-slate-200">{item.label}</span><span className={`h-2 w-2 rounded-full ${item.tone === 'pink' ? 'bg-[#ff4d6d]' : item.tone === 'teal' ? 'bg-[#00e0a0]' : 'bg-cyan-300'}`} /></div></motion.div>)}
-          </div>
-          <div className="section-shell mt-2 flex items-center justify-between sm:hidden"><span className="text-xs text-slate-500">{activeSlide + 1} / {screenshotData.length}</span><div className="flex gap-2"><button onClick={() => moveCarousel(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10" data-testid="button-carousel-prev-mobile"><ChevronLeft size={15} /></button><button onClick={() => moveCarousel(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10" data-testid="button-carousel-next-mobile"><ChevronRight size={15} /></button></div></div>
+         <section id="showcase" className="overflow-hidden border-y border-white/[.06] bg-[#091321] py-28 sm:py-36">
+           <div className="section-shell">
+             <FadeIn className="mb-14">
+               <div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.appPreview}</div>
+               <h2 className="text-3xl font-bold tracking-[-.04em] text-white sm:text-5xl">{isArabic ? 'كل طلب، واضح أمامك.' : lang === 'fr' ? 'Chaque commande, sous vos yeux.' : 'Every order, right in front of you.'}</h2>
+             </FadeIn>
+             <div className="mx-auto grid max-w-[700px] gap-10 sm:grid-cols-2">
+               <FadeIn><ShowcasePhone image={loginScreen} label={copy.showcase.login} dataImage="login-screen" /></FadeIn>
+               <FadeIn delay={.08}><ShowcasePhone image={registerScreen} label={copy.showcase.register} dataImage="register-screen" /></FadeIn>
+             </div>
+             <div className="my-16 h-px bg-white/10" />
+             <div className="grid items-start gap-14 lg:grid-cols-[1.1fr_.9fr]" dir={isArabic ? 'rtl' : 'ltr'}>
+               <FadeIn className="flex flex-col items-center gap-8 sm:flex-row sm:items-start">
+                 <ShowcasePhone label={copy.showcase.driverTitle} dataImage="driver-orders-screen" />
+                 <div className="max-w-[430px] pt-2 text-center sm:text-start">
+                   <h3 className="text-2xl font-bold tracking-[-.03em] text-white sm:text-3xl">{copy.showcase.driverTitle}</h3>
+                   <p className="mt-4 text-sm leading-7 text-slate-400">{copy.showcase.driverBody}</p>
+                 </div>
+               </FadeIn>
+               <FadeIn delay={.1} className="flex flex-col items-center">
+                 <div className="grid w-full max-w-[440px] grid-cols-2 items-end gap-4">
+                   <ShowcasePhone image={orderScreen} label="" dataImage="order-screen" compact />
+                   <ShowcasePhone image={ordersScreen} label="" dataImage="orders-tracking-screen" compact />
+                 </div>
+                 <div className="mt-7 max-w-[440px] text-center sm:text-start">
+                   <h3 className="text-2xl font-bold tracking-[-.03em] text-white sm:text-3xl">{copy.showcase.ordersTitle}</h3>
+                   <p className="mt-4 text-sm leading-7 text-slate-400">{copy.showcase.ordersBody}</p>
+                 </div>
+               </FadeIn>
+             </div>
+             <div className="my-16 h-px bg-white/10" />
+             <FadeIn className="mx-auto flex max-w-[520px] flex-col items-center text-center">
+               <ShowcasePhone image={supportScreen} label="" dataImage="support-screen" />
+               <h3 className="mt-7 text-2xl font-bold tracking-[-.03em] text-white sm:text-3xl">{copy.showcase.supportTitle}</h3>
+               <p className="mt-4 text-sm leading-7 text-slate-400">{copy.showcase.supportBody}</p>
+             </FadeIn>
+           </div>
         </section>
 
         <section id="download" className="relative overflow-hidden border-y border-white/[.06] py-28 sm:py-36">
