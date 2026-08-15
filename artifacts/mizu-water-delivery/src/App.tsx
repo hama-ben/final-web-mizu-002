@@ -43,7 +43,7 @@ import orderScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٠٦-٢
 import ordersScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٣٨-٥٤٧_com.mizu.app_1786818666483.jpg';
 import supportScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٤٨-٧٨٩_com.mizu.app_1786818671143.jpg';
 
-const PLAY_STORE_URL = '#';
+const APK_DOWNLOAD_URL = 'https://github.com/hama-ben/final-web-mizu-002/releases/download/v1.0.0/app-debug.apk';
 const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61590856328769';
 const queryClient = new QueryClient();
 
@@ -531,7 +531,7 @@ function RoleFeatureSection({ id, role, content, isArabic }: { id: string; role:
             <h2 className="max-w-[720px] text-4xl font-bold leading-[1.08] tracking-[-.05em] text-white sm:text-6xl">{content.title}</h2>
             <p className={`mt-5 max-w-[650px] text-lg font-semibold leading-8 ${accent === 'teal' ? 'text-[#8cf5d2]' : 'text-cyan-100/90'}`}>{content.subtitle}</p>
             <p className="mt-5 max-w-[670px] text-sm leading-7 text-slate-300/70">{content.body}</p>
-            <a href={PLAY_STORE_URL} className={`mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-sm font-bold transition hover:-translate-y-1 ${accent === 'teal' ? 'border border-[#00e0a0]/30 bg-[#00e0a0]/10 text-[#5ff2c3]' : 'bg-[#24b8e8] text-[#06111e] cyan-glow'}`} data-testid={`link-${role}-cta`}>
+            <a href={APK_DOWNLOAD_URL} download="Mizu.apk" className={`mt-8 inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-sm font-bold transition hover:-translate-y-1 ${accent === 'teal' ? 'border border-[#00e0a0]/30 bg-[#00e0a0]/10 text-[#5ff2c3]' : 'bg-[#24b8e8] text-[#06111e] cyan-glow'}`} data-testid={`link-${role}-cta`}>
               <Play size={15} fill="currentColor" />{content.cta}<ArrowUpRight size={15} />
             </a>
           </FadeIn>
@@ -643,7 +643,7 @@ function App() {
           </nav>
           <div className="flex items-center gap-2">
             <div className="hidden sm:block"><LanguageSwitcher lang={lang} setLang={setLang} /></div>
-            <a href={PLAY_STORE_URL} className="hidden rounded-full bg-[#20b5e6] px-4 py-2.5 text-xs font-bold text-[#06111d] cyan-glow transition hover:-translate-y-0.5 sm:inline-flex" data-testid="link-header-download">{copy.download}</a>
+            <a href={APK_DOWNLOAD_URL} download="Mizu.apk" className="hidden rounded-full bg-[#20b5e6] px-4 py-2.5 text-xs font-bold text-[#06111d] cyan-glow transition hover:-translate-y-0.5 sm:inline-flex" data-testid="link-header-download">{copy.download}</a>
             <button onClick={() => setMobileMenu(!mobileMenu)} className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-200 lg:hidden" aria-label="Open menu" data-testid="button-mobile-menu">{mobileMenu ? <X size={18} /> : <Menu size={18} />}</button>
           </div>
         </div>
@@ -661,7 +661,7 @@ function App() {
               <h1 className="max-w-[700px] text-[clamp(3.1rem,8vw,6.5rem)] font-extrabold leading-[.98] tracking-[-.065em] text-white">{isArabic ? <>مياهك تصل إليك.<br /><span className="text-cyan-gradient">ببساطة.</span></> : <>{copy.heroTitle.split('. ')[0]}.<br /><span className="text-cyan-gradient">{copy.heroTitle.split('. ')[1]}</span></>}</h1>
               <p className="mt-7 max-w-[540px] text-base leading-8 text-slate-400 sm:text-lg">{copy.heroBody}</p>
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a href={PLAY_STORE_URL} className="group inline-flex items-center gap-2.5 rounded-full bg-[#24b8e8] px-5 py-3.5 text-sm font-bold text-[#071321] cyan-glow transition hover:-translate-y-1" data-testid="link-hero-download"><Play size={16} fill="currentColor" />{copy.download}<ArrowUpRight size={15} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></a>
+                <a href={APK_DOWNLOAD_URL} download="Mizu.apk" className="group inline-flex items-center gap-2.5 rounded-full bg-[#24b8e8] px-5 py-3.5 text-sm font-bold text-[#071321] cyan-glow transition hover:-translate-y-1" data-testid="link-hero-download"><Play size={16} fill="currentColor" />{copy.download}<ArrowUpRight size={15} className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></a>
                 <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[.04] px-5 py-3.5 text-sm font-semibold text-slate-200 transition hover:border-cyan-300/50 hover:bg-white/[.08]" data-testid="link-hero-facebook"><Facebook size={16} />{copy.facebook}</a>
               </div>
               <div className="mt-8 flex items-center gap-3 text-xs text-slate-500"><div className="flex -space-x-2 rtl:space-x-reverse">{['N', 'S', 'A'].map((letter, i) => <div key={letter} className={`grid h-7 w-7 place-items-center rounded-full border-2 border-[#080e1b] text-[10px] font-bold text-[#06111c] ${i === 1 ? 'bg-[#00e0a0]' : i === 2 ? 'bg-[#ff8b9d]' : 'bg-[#49c9ee]'}`}>{letter}</div>)}</div><span>{copy.trusted}</span><Star size={13} className="fill-[#ffc45a] text-[#ffc45a]" /></div>
@@ -713,7 +713,7 @@ function App() {
 
         <section id="download" className="relative overflow-hidden border-y border-white/[.06] py-28 sm:py-36">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(25,171,221,.16),transparent_65%)]" />
-          <FadeIn className="section-shell relative text-center"><div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-cyan-300/15 text-cyan-300"><Droplets size={25} /></div><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.finalKicker}</div><h2 className="text-5xl font-bold tracking-[-.06em] text-white sm:text-7xl">{copy.finalTitle}</h2><p className="mx-auto mt-6 max-w-[480px] text-sm leading-7 text-slate-400">{copy.finalBody}</p><div className="mt-8 flex flex-wrap justify-center gap-3"><a href={PLAY_STORE_URL} className="inline-flex items-center gap-3 rounded-full bg-[#24b8e8] px-6 py-3.5 text-sm font-bold text-[#06111e] cyan-glow transition hover:-translate-y-1" data-testid="link-final-download"><Play size={16} fill="currentColor" /><span><small className="block text-[9px] font-medium opacity-70">GET IT ON</small>{copy.download}</span></a><button disabled className="inline-flex cursor-not-allowed items-center gap-3 rounded-full border border-white/10 bg-white/[.04] px-6 py-3 text-start text-sm font-semibold text-slate-500" data-testid="button-app-store"><span className="text-xl"></span><span><small className="block text-[9px] font-medium">AVAILABLE</small>{copy.appStore}</span></button></div></FadeIn>
+          <FadeIn className="section-shell relative text-center"><div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-cyan-300/15 text-cyan-300"><Droplets size={25} /></div><div className="mb-4 text-[11px] font-bold uppercase tracking-[.24em] text-cyan-300">{copy.finalKicker}</div><h2 className="text-5xl font-bold tracking-[-.06em] text-white sm:text-7xl">{copy.finalTitle}</h2><p className="mx-auto mt-6 max-w-[480px] text-sm leading-7 text-slate-400">{copy.finalBody}</p><div className="mt-8 flex flex-wrap justify-center gap-3"><a href={APK_DOWNLOAD_URL} download="Mizu.apk" className="inline-flex items-center gap-3 rounded-full bg-[#24b8e8] px-6 py-3.5 text-sm font-bold text-[#06111e] cyan-glow transition hover:-translate-y-1" data-testid="link-final-download"><Play size={16} fill="currentColor" /><span><small className="block text-[9px] font-medium opacity-70">GET IT ON</small>{copy.download}</span></a><button disabled className="inline-flex cursor-not-allowed items-center gap-3 rounded-full border border-white/10 bg-white/[.04] px-6 py-3 text-start text-sm font-semibold text-slate-500" data-testid="button-app-store"><span className="text-xl"></span><span><small className="block text-[9px] font-medium">AVAILABLE</small>{copy.appStore}</span></button></div></FadeIn>
         </section>
       </main>
 
