@@ -998,8 +998,6 @@ function App() {
           </div>
         </section>
 
-        <TeamSection copy={copy} />
-
          <RoleFeatureSection id="features" role="consumer" content={copy.consumers} isArabic={isArabic} />
 
          <RoleFeatureSection id="drivers" role="driver" content={copy.drivers} isArabic={isArabic} />
@@ -1053,6 +1051,8 @@ function App() {
              </FadeIn>
            </div>
         </section>
+
+         <TeamSection copy={copy} />
 
         <section id="download" className="relative overflow-hidden border-y border-white/[.06] py-28 sm:py-36">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(25,171,221,.16),transparent_65%)]" />
