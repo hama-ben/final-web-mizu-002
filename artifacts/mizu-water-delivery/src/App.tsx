@@ -27,6 +27,7 @@ import {
   ShieldCheck,
   Star,
   Truck,
+  UserRound,
   X,
   Zap,
 } from 'lucide-react';
@@ -73,6 +74,10 @@ type ShowcaseCopy = {
   supportTitle: string;
   supportBody: string;
 };
+type TeamMember = {
+  name: string;
+  role: string;
+};
 type Copy = {
   nav: string[];
   heroKicker: string;
@@ -113,12 +118,14 @@ type Copy = {
   privacyLabel: string;
   securityLabel: string;
   backHome: string;
+  teamTitle: string;
+  teamMembers: TeamMember[];
   showcase: ShowcaseCopy;
 };
 
 const translations: Record<Lang, Copy> = {
   ar: {
-    nav: ['الرئيسية', 'المميزات', 'كيف يعمل', 'حمّل التطبيق', 'تواصل معنا'],
+    nav: ['الرئيسية', 'المميزات', 'كيف يعمل', 'فريق العمل', 'حمّل التطبيق', 'تواصل معنا'],
     heroKicker: 'الماء النقي، في وقته تماماً',
     heroTitle: 'مياهك تصل إليك. ببساطة.',
     heroBody: 'Mizu هو رفيقك المحلي لطلب مياه الشرب في الجزائر. اختر الكمية، تابع السائق، واستقبل الماء عند بابك دون مكالمات.',
@@ -267,6 +274,11 @@ const translations: Record<Lang, Copy> = {
     privacyLabel: 'سياسة الخصوصية',
     securityLabel: 'سياسة الأمان',
     backHome: 'العودة إلى الرئيسية',
+    teamTitle: 'فريق العمل',
+    teamMembers: [
+      { name: 'محمد زراري', role: 'مصمم ومساعد مسؤول الدعم' },
+      { name: 'بن علاهم محمد', role: 'مطور ومسؤول الدعم' },
+    ],
     showcase: {
       login: 'تسجيل الدخول',
       register: 'إنشاء حساب',
@@ -279,7 +291,7 @@ const translations: Record<Lang, Copy> = {
     },
   },
   fr: {
-    nav: ['Accueil', 'Avantages', 'Comment ça marche', 'Télécharger', 'Contact'],
+    nav: ['Accueil', 'Avantages', 'Comment ça marche', 'Notre équipe', 'Télécharger', 'Contact'],
     heroKicker: 'L’eau pure, juste à temps',
     heroTitle: 'Votre eau arrive. Tout simplement.',
     heroBody: 'Mizu est votre compagnon local pour commander de l’eau potable en Algérie. Choisissez, suivez, recevez.',
@@ -428,6 +440,11 @@ Si vous estimez que la sécurité de vos données a été compromise et que notr
     privacyLabel: 'Politique de confidentialité',
     securityLabel: 'Politique de sécurité',
     backHome: 'Retour à l’accueil',
+    teamTitle: 'Notre équipe',
+    teamMembers: [
+      { name: 'محمد زراري', role: 'Designer et assistant du support' },
+      { name: 'بن علاهم محمد', role: 'Développeur et responsable du support' },
+    ],
     showcase: {
       login: 'Connexion',
       register: 'Créer un compte',
@@ -440,7 +457,7 @@ Si vous estimez que la sécurité de vos données a été compromise et que notr
     },
   },
   en: {
-    nav: ['Home', 'Features', 'How it works', 'Download', 'Contact'],
+    nav: ['Home', 'Features', 'How it works', 'Our Team', 'Download', 'Contact'],
     heroKicker: 'Pure water, right on time',
     heroTitle: 'Your water arrives. Simple as that.',
     heroBody: 'Mizu is your local companion for ordering drinking water in Algeria. Pick a size, follow your driver, and open the door.',
@@ -589,6 +606,11 @@ If you believe that the security of your data has been compromised and we have n
     privacyLabel: 'Privacy Policy',
     securityLabel: 'Security Policy',
     backHome: 'Back to home',
+    teamTitle: 'Our Team',
+    teamMembers: [
+      { name: 'محمد زراري', role: 'Designer and support assistant' },
+      { name: 'بن علاهم محمد', role: 'Developer and support lead' },
+    ],
     showcase: {
       login: 'Sign in',
       register: 'Create account',
@@ -651,6 +673,43 @@ function FadeIn({ children, delay = 0, className = '' }: { children: ReactNode; 
     >
       {children}
     </motion.div>
+  );
+}
+
+function TeamMemberCard({ member, dataImage, delay }: { member: TeamMember; dataImage: string; delay: number }) {
+  return (
+    <FadeIn delay={delay}>
+      <article className="group flex flex-col items-center text-center" data-testid={`team-member-${dataImage}`}>
+        <div
+          data-image={dataImage}
+          className="grid h-[120px] w-[120px] place-items-center rounded-full border border-cyan-300/35 bg-[#07111d] text-cyan-200 shadow-[0_0_30px_rgba(41,171,226,.16)] transition duration-300 group-hover:scale-105 group-hover:border-cyan-200/70 group-hover:shadow-[0_0_42px_rgba(41,171,226,.3)]"
+          aria-label={`Image placeholder for ${member.name}`}
+        >
+          <UserRound size={42} strokeWidth={1.35} />
+        </div>
+        <h3 className="mt-6 text-lg font-bold tracking-[-.02em] text-white">{member.name}</h3>
+        <p className="mt-2 max-w-[230px] text-sm leading-6 text-slate-400">{member.role}</p>
+      </article>
+    </FadeIn>
+  );
+}
+
+function TeamSection({ copy }: { copy: Copy }) {
+  return (
+    <section id="team" className="scroll-mt-24 relative overflow-hidden border-y border-white/[.06] bg-[#0a1423] py-24 sm:py-32">
+      <div className="pointer-events-none absolute -start-32 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-cyan-400/[.07] blur-[100px]" />
+      <div className="pointer-events-none absolute -end-32 bottom-[-100px] h-80 w-80 rounded-full bg-[#00e0a0]/[.05] blur-[100px]" />
+      <div className="section-shell relative">
+        <FadeIn className="text-center">
+          <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(41,171,226,.55)]" />
+          <h2 className="text-4xl font-bold tracking-[-.05em] text-white sm:text-6xl">{copy.teamTitle}</h2>
+        </FadeIn>
+        <div className="mx-auto mt-14 grid max-w-[620px] grid-cols-2 gap-5 sm:gap-16" dir="rtl">
+          <TeamMemberCard member={copy.teamMembers[0]} dataImage="team-member-1" delay={.08} />
+          <TeamMemberCard member={copy.teamMembers[1]} dataImage="team-member-2" delay={.2} />
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -888,7 +947,7 @@ function App() {
         <div className="section-shell flex h-[74px] items-center justify-between gap-4">
           <button onClick={() => scrollTo('home')} aria-label="Mizu home" data-testid="button-logo-home"><BrandMark /></button>
           <nav className="hidden items-center gap-7 lg:flex">
-            {['home', 'features', 'how-it-works', 'download', 'contact'].map((id, index) => <button key={id} onClick={() => scrollTo(id)} className="nav-link text-xs font-semibold text-slate-400" data-testid={`link-nav-${id}`}>{copy.nav[index]}</button>)}
+            {['home', 'features', 'how-it-works', 'team', 'download', 'contact'].map((id, index) => <button key={id} onClick={() => scrollTo(id)} className="nav-link text-xs font-semibold text-slate-400" data-testid={`link-nav-${id}`}>{copy.nav[index]}</button>)}
           </nav>
           <div className="flex items-center gap-2">
             <div className="hidden sm:block"><LanguageSwitcher lang={lang} setLang={setLang} /></div>
@@ -897,7 +956,7 @@ function App() {
             <button onClick={() => setMobileMenu(!mobileMenu)} className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[.04] text-slate-200 lg:hidden" aria-label="Open menu" data-testid="button-mobile-menu">{mobileMenu ? <X size={18} /> : <Menu size={18} />}</button>
           </div>
         </div>
-        {mobileMenu && <div className="border-t border-white/[.06] bg-[#0b1424] px-5 pb-5 pt-3 lg:hidden"><div className="mb-3"><LanguageSwitcher lang={lang} setLang={setLang} /></div>{['home', 'features', 'how-it-works', 'download', 'contact'].map((id, index) => <button key={id} onClick={() => scrollTo(id)} className="block w-full border-b border-white/[.05] py-3 text-start text-sm text-slate-300" data-testid={`link-mobile-${id}`}>{copy.nav[index]}</button>)}</div>}
+        {mobileMenu && <div className="border-t border-white/[.06] bg-[#0b1424] px-5 pb-5 pt-3 lg:hidden"><div className="mb-3"><LanguageSwitcher lang={lang} setLang={setLang} /></div>{['home', 'features', 'how-it-works', 'team', 'download', 'contact'].map((id, index) => <button key={id} onClick={() => scrollTo(id)} className="block w-full border-b border-white/[.05] py-3 text-start text-sm text-slate-300" data-testid={`link-mobile-${id}`}>{copy.nav[index]}</button>)}</div>}
       </header>
 
       <main>
@@ -937,6 +996,8 @@ function App() {
             <span className="hidden items-center gap-2 sm:flex"><MessageCircle size={15} className="text-[#ff8093]" /> {isArabic ? 'دعم حقيقي' : lang === 'fr' ? 'Support humain' : 'Human support'}</span>
           </div>
         </section>
+
+        <TeamSection copy={copy} />
 
          <RoleFeatureSection id="features" role="consumer" content={copy.consumers} isArabic={isArabic} />
 
@@ -1001,7 +1062,7 @@ function App() {
       <footer id="contact" className="bg-[#060b15] pt-16">
         <div className="section-shell grid gap-12 pb-14 md:grid-cols-[1.4fr_.7fr_.7fr]">
           <div><BrandMark compact /><p className="mt-5 max-w-[260px] text-sm leading-6 text-slate-500">{copy.footerBody}</p><a href="mailto:hello@mizu.dz" className="mt-5 inline-flex items-center gap-2 text-sm text-cyan-300 hover:text-cyan-200" data-testid="link-email"><Send size={14} /> hello@mizu.dz</a></div>
-           <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'روابط سريعة' : lang === 'fr' ? 'Liens rapides' : 'Explore'}</div><div className="flex flex-col items-start gap-3 text-sm text-slate-400"><button onClick={() => scrollTo('features')} data-testid="link-footer-features">{copy.nav[1]}</button><button onClick={() => scrollTo('drivers')} data-testid="link-footer-drivers">{copy.drivers.kicker}</button><button onClick={() => scrollTo('how-it-works')} data-testid="link-footer-how">{copy.nav[2]}</button><button onClick={() => scrollTo('download')} data-testid="link-footer-download">{copy.nav[3]}</button></div></div>
+           <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'روابط سريعة' : lang === 'fr' ? 'Liens rapides' : 'Explore'}</div><div className="flex flex-col items-start gap-3 text-sm text-slate-400"><button onClick={() => scrollTo('features')} data-testid="link-footer-features">{copy.nav[1]}</button><button onClick={() => scrollTo('drivers')} data-testid="link-footer-drivers">{copy.drivers.kicker}</button><button onClick={() => scrollTo('how-it-works')} data-testid="link-footer-how">{copy.nav[2]}</button><button onClick={() => scrollTo('team')} data-testid="link-footer-team">{copy.nav[3]}</button><button onClick={() => scrollTo('download')} data-testid="link-footer-download">{copy.nav[4]}</button></div></div>
            <div><div className="mb-4 text-xs font-bold uppercase tracking-[.18em] text-slate-500">{isArabic ? 'ابقَ قريباً' : lang === 'fr' ? 'Restons proches' : 'Stay close'}</div><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-facebook"><Facebook size={16} /> Facebook <ArrowUpRight size={13} /></a><a href="mailto:support@mizu.dz" className="mt-4 flex items-center gap-2 text-sm text-slate-400 transition hover:text-cyan-300" data-testid="link-footer-support"><CircleHelp size={16} /> {copy.support}</a><div className="mt-5 flex flex-col items-start gap-3 text-sm text-slate-400"><a href="/privacy-policy" className="transition hover:text-cyan-300" data-testid="link-footer-privacy">{copy.privacyLabel}</a><a href="/security-policy" className="transition hover:text-cyan-300" data-testid="link-footer-security">{copy.securityLabel}</a></div></div>
         </div>
         <div className="border-t border-white/[.06]"><div className="section-shell flex flex-wrap items-center justify-between gap-3 py-5 text-[11px] text-slate-600"><span>{copy.rights}</span><span className="flex items-center gap-1.5"><MapPin size={12} />Algeria</span></div></div>
