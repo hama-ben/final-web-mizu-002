@@ -27,7 +27,6 @@ import {
   ShieldCheck,
   Star,
   Truck,
-  UserRound,
   X,
   Zap,
 } from 'lucide-react';
@@ -42,6 +41,8 @@ import registerScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٨-٥٠
 import orderScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٠٦-٢٠٨_com.mizu.app_1786818661708.jpg';
 import ordersScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٣٨-٥٤٧_com.mizu.app_1786818666483.jpg';
 import supportScreen from '@assets/Screenshot_٢٠٢٦-٠٨-١٥-١٩-١٩-٤٨-٧٨٩_com.mizu.app_1786818671143.jpg';
+import sheepTeamPhoto from '@assets/721209142_4378910099091775_767774406569371359_n_1786883060430.jpg';
+import designerTeamPhoto from '@assets/5999309967049034934_1786883095589.jpg';
 
 const APK_DOWNLOAD_URL = 'https://github.com/hama-ben/final-web-mizu-002/releases/download/v1.0.0/app-debug.apk';
 const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61590856328769';
@@ -276,7 +277,7 @@ const translations: Record<Lang, Copy> = {
     backHome: 'العودة إلى الرئيسية',
     teamTitle: 'فريق العمل',
     teamMembers: [
-      { name: 'محمد زراري', role: 'مصمم ومساعد مسؤول الدعم' },
+      { name: 'محمد زراري عبد الوهاب', role: 'مصمم ومساعد مسؤول الدعم' },
       { name: 'بن علاهم محمد', role: 'مطور ومسؤول الدعم' },
     ],
     showcase: {
@@ -442,7 +443,7 @@ Si vous estimez que la sécurité de vos données a été compromise et que notr
     backHome: 'Retour à l’accueil',
     teamTitle: 'Notre équipe',
     teamMembers: [
-      { name: 'محمد زراري', role: 'Designer et assistant du support' },
+      { name: 'محمد زراري عبد الوهاب', role: 'Designer et assistant du support' },
       { name: 'بن علاهم محمد', role: 'Développeur et responsable du support' },
     ],
     showcase: {
@@ -608,7 +609,7 @@ If you believe that the security of your data has been compromised and we have n
     backHome: 'Back to home',
     teamTitle: 'Our Team',
     teamMembers: [
-      { name: 'محمد زراري', role: 'Designer and support assistant' },
+      { name: 'محمد زراري عبد الوهاب', role: 'Designer and support assistant' },
       { name: 'بن علاهم محمد', role: 'Developer and support lead' },
     ],
     showcase: {
@@ -676,16 +677,16 @@ function FadeIn({ children, delay = 0, className = '' }: { children: ReactNode; 
   );
 }
 
-function TeamMemberCard({ member, dataImage, delay }: { member: TeamMember; dataImage: string; delay: number }) {
+function TeamMemberCard({ member, dataImage, delay, image }: { member: TeamMember; dataImage: string; delay: number; image: string }) {
   return (
     <FadeIn delay={delay}>
       <article className="group flex flex-col items-center text-center" data-testid={`team-member-${dataImage}`}>
         <div
           data-image={dataImage}
-          className="grid h-[120px] w-[120px] place-items-center rounded-full border border-cyan-300/35 bg-[#07111d] text-cyan-200 shadow-[0_0_30px_rgba(41,171,226,.16)] transition duration-300 group-hover:scale-105 group-hover:border-cyan-200/70 group-hover:shadow-[0_0_42px_rgba(41,171,226,.3)]"
-          aria-label={`Image placeholder for ${member.name}`}
+          className="h-[120px] w-[120px] overflow-hidden rounded-full border border-cyan-300/35 bg-[#07111d] text-cyan-200 shadow-[0_0_30px_rgba(41,171,226,.16)] transition duration-300 group-hover:scale-105 group-hover:border-cyan-200/70 group-hover:shadow-[0_0_42px_rgba(41,171,226,.3)]"
+          aria-label={`Team member photo: ${member.name}`}
         >
-          <UserRound size={42} strokeWidth={1.35} />
+          <img src={image} alt={member.name} className="h-full w-full object-cover" />
         </div>
         <h3 className="mt-6 text-lg font-bold tracking-[-.02em] text-white">{member.name}</h3>
         <p className="mt-2 max-w-[230px] text-sm leading-6 text-slate-400">{member.role}</p>
@@ -705,8 +706,8 @@ function TeamSection({ copy }: { copy: Copy }) {
           <h2 className="text-4xl font-bold tracking-[-.05em] text-white sm:text-6xl">{copy.teamTitle}</h2>
         </FadeIn>
         <div className="mx-auto mt-14 grid max-w-[620px] grid-cols-2 gap-5 sm:gap-16" dir="rtl">
-          <TeamMemberCard member={copy.teamMembers[0]} dataImage="team-member-1" delay={.08} />
-          <TeamMemberCard member={copy.teamMembers[1]} dataImage="team-member-2" delay={.2} />
+          <TeamMemberCard member={copy.teamMembers[0]} dataImage="team-member-1" image={designerTeamPhoto} delay={.08} />
+          <TeamMemberCard member={copy.teamMembers[1]} dataImage="team-member-2" image={sheepTeamPhoto} delay={.2} />
         </div>
       </div>
     </section>
